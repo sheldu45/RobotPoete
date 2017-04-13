@@ -8,3 +8,5 @@ https://www.youtube.com/watch?v=5z3MVEc33FI
 
 
 espeak.exe -v fr-fr -x "   "
+
+http://ydisanto.developpez.com/tutoriels/java/runtime-exec/
