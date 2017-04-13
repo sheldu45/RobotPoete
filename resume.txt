@@ -1,0 +1,81 @@
+enum CategorieGramma {}
+
+
+Dico //constituée par web-scrapping :
+		
+	*ArrayList<Mots>
+
+	>static	Dico fusionner(Dico1, Dico2)
+	>tri(fusion?)DuDico
+	>recherche(mot) //dichotomique a partir des differentes entrees possibles pour un mot (str, cat, syll ?)
+
+	>Constr(urlFichier)
+	>Sauvegarder(urlFichier)
+
+Syntaxe :
+	
+	*Static Grammaire //celle de reference
+	*CategorieGramma[] //description de la chaîne grammaticale
+	*Testeur //estime à quelle point la contrainte phonétique est respéctée
+
+	>prononciation() -> representation phonétique
+	>estCompletableSelonLaGrammaire(Grammaire g)
+	>estComplete()
+	>noter() -> evaluation grace au testeur de la represention phonetique
+
+	Constr(CategorieGramma[])
+	
+static Testeur :
+	
+	//le string est la representation avec les conventions de espeak
+	>static evaluation(string representationPhonetique) -> un double entre 0-1
+
+Grammaire //Dico Syntaxe //constituée à la main :
+
+	*ArrayList<Syntaxe>
+
+	//renvoie toutes les syntaxes qui complete(raient) la syntaxe en argument
+	>recherchePartielle(Syntaxe) -> Syntaxe[]
+
+	>Constr(urlFichier)
+	>Sauvegarder(urlFichier)
+
+//c'est un arbre dont les noeuds sont des mots. On le pracourera en Longueur aléatoirement
+Arbre :
+	
+	//la racine est "epsilon"
+	*racine
+
+	//on initialise les enfants directs de epsilon (typiquement : les pronoms personnels)
+	>init()
+	// on reccupere toutes les feuilles de l'arbre
+	>reccupererlesFeuilles() -> ArrayList<Parcours>
+	>reccupererPourUneFeuilleDonneeLaSyntaxe(Parcours) -> Syntaxe
+	//incremente en largeur à partir de toutes les feuilles	
+	>void incrementer()
+	//incremente en profondeur à partir d'un noeud
+	>void incrementer(Parcours)
+
+	>getNoeud(Parcours)
+	>getNoeudAlea()
+	>getNoeudAleaAPartirDUnNoeud(Parcours)
+
+
+//donnera un certain nombre de directions à prendre dans l'arbre pour arriver sur une feuille donnée
+Parcours :
+
+
+Mot :
+	*String
+	*CategorieGramma
+	*Syllabe[]
+
+	>Constr(str, Cat, Syll[])
+	
+Syllabe :
+
+	>static dist(x, y)
+
+	*String
+	
+	>Constr(str)
