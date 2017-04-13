@@ -13,7 +13,7 @@ public class SynthetiseurVocal {
 		//attention au "&" sur windows et au ";" sur linux qui peuvent permettre un hack et l'execution d'autres lignes de commandes
 		
 		Runtime runtime = Runtime.getRuntime();
-		String[] args1 = { "cmd.exe", "/C", "espeak.exe -v fr-fr -x \""+param+"\"" };
+		String[] args1 = { "cmd.exe", "/C", "espeak.exe -v fr-fr -x -q \""+param+"\"" };
 		final Process process = runtime.exec(args1);
 		
 		// Consommation de la sortie standard de l'application externe dans un Thread separe
