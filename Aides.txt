@@ -1,0 +1,10 @@
+Aides à partir de ces fichiers : 
+
+http://www.programcreek.com/java-api-examples/index.php?source_dir=speech-master/jaivox/src/com/jaivox/synthesizer/espeak/SynthSession.java
+
+http://reynold77.blogspot.fr/2010/03/text-to-speech-in-java-worked-well-on.html
+
+https://www.youtube.com/watch?v=5z3MVEc33FI
+
+
+espeak.exe -v fr-fr -x "   "
