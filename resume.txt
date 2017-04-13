@@ -78,4 +78,6 @@ Syllabe :
 
 	*String
 	
-	>Constr(str)
+>Constr(str)
+
+SHERV A COMMIT
