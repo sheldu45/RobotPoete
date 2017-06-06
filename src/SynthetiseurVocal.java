@@ -8,7 +8,7 @@ public class SynthetiseurVocal {
 
 		System.out.println(System.getProperty("os.name"));
 	    	
-		String param = "Bonjour et merci d'avoir été si nombreux à regarder mes vidéos !";
+		String param = "Ô vieillesse ennemie";
 		String hackParam = "\" & dir";
 		//attention au "&" sur windows et au ";" sur linux qui peuvent permettre un hack et l'execution d'autres lignes de commandes
 		

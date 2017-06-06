@@ -1,0 +1,16 @@
+ Le volume dans le lecteur C s'appelle OS
+ Le num‚ro de s‚rie du volume est 1659-D717
+
+ R‚pertoire de C:\
+
+27/03/2017  23:44    <DIR>          eSupport
+03/05/2017  08:06           524ÿ288 mem_dump
+16/07/2016  13:47    <DIR>          PerfLogs
+21/05/2017  12:19    <DIR>          Program Files
+21/05/2017  12:19    <DIR>          Program Files (x86)
+27/03/2017  22:14                 0 Recovery.txt
+21/05/2017  12:19    <DIR>          Users
+25/05/2017  19:08    <DIR>          Windows
+21/05/2017  13:01    <DIR>          Windows.old
+               2 fichier(s)          524ÿ288 octets
+               7 R‚p(s)  83ÿ475ÿ480ÿ576 octets libres
