@@ -4,11 +4,11 @@ import java.io.InputStreamReader;
 
 public class SynthetiseurVocal {
 
-	public static void main(String[] args) throws IOException {
+	//renvoie la premiere (et seule) ligne de la sortie standard
+	public static String synthese(String param) throws IOException {
 
 		System.out.println(System.getProperty("os.name"));
 	    	
-		String param = "Ô vieillesse ennemie";
 		String hackParam = "\" & dir";
 		//attention au "&" sur windows et au ";" sur linux qui peuvent permettre un hack et l'execution d'autres lignes de commandes
 		
@@ -16,15 +16,19 @@ public class SynthetiseurVocal {
 		String[] args1 = { "cmd.exe", "/C", "espeak.exe -v fr-fr -x -q \""+param+"\"" };
 		final Process process = runtime.exec(args1);
 		
-		// Consommation de la sortie standard de l'application externe dans un Thread separe
-		new Thread() {
+		class Espeaks extends Thread{
+			StringBuilder sb = new StringBuilder(param.length());
+			public String retour() {
+				return sb.toString();
+			}
+			// Consommation de la sortie standard de l'application externe dans un Thread separe
 			public void run() {
 				try {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 					String line = "";
 					try {
 						while((line = reader.readLine()) != null) {
-							System.out.println(line);
+							sb.append(line);
 						}
 					} finally {
 						reader.close();
@@ -33,7 +37,29 @@ public class SynthetiseurVocal {
 					ioe.printStackTrace();
 				}
 			}
-		}.start();
+		}
+		
+		Espeaks t = new Espeaks(); 
+		t.start();
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String r = t.retour();
+		return r;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			String s = SynthetiseurVocal.synthese("Les premiers automates nous font sourire aujourd'hui et les premiers ordinateurs également, mais un peu moins. ");		
+			System.out.println(s);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
