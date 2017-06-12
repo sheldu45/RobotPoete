@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * implementation d'un tas min, par définition ordonné. Et
  * permet les méthodes de recherche par dichotomie (en temps ln(n))
@@ -7,28 +9,23 @@ public class Tas<C extends Comparable<C>>{
 
 	//---------------Méthodes d'Instanciation---------------
 	
-	private C[] contenu;   // Sous-arbre droit
+	private ArrayList<C> contenu;   // Sous-arbre droit
     private int taille; 	// taille = nombre de nœuds
     
     // Constructeurs
     /** Consruit un tas à partir d'un tableau */
-    public Tas(C[] tableau){
+    public Tas(ArrayList<C> tableau){
 		this.contenu = tableau;
-		this.taille = tableau.length;
+		this.taille = tableau.size();
 	}
 	
-	 /** Consruit un tas vide */
-    public Tas(){
-		this.contenu = new C[0];
-		this.taille = 0;
-	}
 	
 	// Utiles 
 	
 	public String toString(){
 		String res = "[";
         for (int i = 0; i < this.taille; i++){
-            res = res + " " + this.contenu[i];
+            res = res + " " + this.contenu.get(i);
         }
         res = res + " ] size=" + this.taille;
         return res;
@@ -46,22 +43,27 @@ public class Tas<C extends Comparable<C>>{
 		elt1 = elt2;
 		elt2 = tmp;
 	}
+	
+	public int compare(int i, int j){
+		return this.contenu.get(i).compareTo(this.contenu.get(j));
+	}
 
 	/** insertion d'un élément dans le tas
 	 * 	Complexité en O(h) --> h étant la hauteur de l'arbre
 	 * */
 	public void add(C elt){
 		if (isEmpty()){
-			this.contenu[0] = elt;
+			this.contenu.add(0,elt);
 			this.taille++;
 		}
 		else{
 			this.taille++;
-			this.contenu[taille] = elt;
+			this.contenu.add(taille,elt);
 			int i = this.taille;
-			int comp = this.contenu[i].compareTo(this.contenu[i/2]);
+			int comp = compare(i,(i/2));
 			while (i>1 && comp>0){
-				echange(this.contenu[i],this.contenu[i/2]);
+				echange(this.contenu.get(i),this.contenu.get(i/2));
+				i = i/2;
 			}
 		}
 	}
@@ -71,25 +73,25 @@ public class Tas<C extends Comparable<C>>{
 	 *  Complexité en O(h) --> h étant la hauteur de l'arbre
 	 *  */
 	public void suppression(C elt){
-		C a = this.contenu[0];
-		this.contenu[1] = this.contenu[taille];
+		C a = this.contenu.get(0);
+		this.contenu.set(1,this.contenu.get(taille));
 		this.taille--;
 		int i = 1;
 		int filsmin;
-		int comp2i = this.contenu[2*i].compareTo(this.contenu[i]);
-		int comp2i1 = this.contenu[2*i+1].compareTo(this.contenu[i]);
+		int comp2i = compare((2*i),i);
+		int comp2i1 = compare((2*i+1),i);
 		while ((2*i+1 <= this.taille) && (comp2i>0 || comp2i1 >0)){
-			int newcomp = this.contenu[2*i].compareTo(this.contenu[2*i+1]);
+			int newcomp = compare((2*i),(2*i+1));
 			if (newcomp>0){
 				filsmin = 2*i;
 			}
 			else{
 				filsmin = 2*i+1;
 			}
-			echange(this.contenu[i],this.contenu[filsmin]);
+			echange(this.contenu.get(i),this.contenu.get(filsmin));
 		}
 		if ((2*i < this.taille) && (comp2i > 0)){
-			echange(this.contenu[i],this.contenu[2*i]);
+			echange(this.contenu.get(i),this.contenu.get(2*i));
 		}
 	}
 	
@@ -101,27 +103,27 @@ public class Tas<C extends Comparable<C>>{
 			entasse(this.contenu,i);
 		}
 		for (int j = this.taille; j > 1; j++){
-			echange(this.contenu[1],this.contenu[j]);
+			echange(this.contenu.get(1),this.contenu.get(j));
 			reEntasse(this.contenu,j);
 		}
 	}
 	
-	public void entasse(C[] tab, int i){
+	public void entasse(ArrayList<C> tab, int i){
 		int j = i;
-		int compj2 = this.contenu[j].compareTo(this.contenu[j/2]);
-		while ((j != 1) && ( compj2 < 0)){
-			echange(this.contenu[j], this.contenu[j/2]);
+		int compj2 = compare(j,(j/2));  
+		while ((j != 1) && (compj2 < 0)){
+			echange(this.contenu.get(j), this.contenu.get(j/2));
 			j = j/2;
 		}
 	}
 	
-	public void reEntasse(C[] tab, int i){
+	public void reEntasse(ArrayList<C> tab, int i){
 		int j = 1;
 		int filsmax;
-		int comp2j = this.contenu[j].compareTo(this.contenu[2*j]); 
-		int comp2j1 = this.contenu[j].compareTo(this.contenu[2*j+1]);
+		int comp2j = compare(j,(2*j));
+		int comp2j1 = compare(j,(2*j+1));  
 		while ((2*j+1) <= i && ( comp2j > 0 || comp2j1 > 0 )){
-			int newcomp = this.contenu[2*j].compareTo(this.contenu[2*j+1]);
+			int newcomp = compare((2*j),(2*j+1)); 
 			if (newcomp>0){
 				filsmax = 2*j;
 			}
@@ -131,7 +133,7 @@ public class Tas<C extends Comparable<C>>{
 			j = filsmax;
 		}
 		if ((2*j < i) && (comp2j<0)){
-			echange(this.contenu[j],this.contenu[2*j]);
+			echange(this.contenu.get(j),this.contenu.get(2*j));
 		}
 	}
 	
@@ -148,7 +150,7 @@ public class Tas<C extends Comparable<C>>{
 	public int search(C elt){
 		int res = -1;
 		for (int i = 0; i < this.taille; i++){
-			if (this.contenu[i] == elt){
+			if (this.contenu.get(i) == elt){
 				return i;
 			}
 		}
@@ -160,7 +162,8 @@ public class Tas<C extends Comparable<C>>{
 	//-----------------------Main-----------------------
   	
     public static void main(String[] args){
-		Tas<String> t = new Tas<String>();
+		ArrayList<String> al = new ArrayList<String>();
+		Tas<String> t = new Tas<String>(al);
 
         t.add("<s>");  
         t.add(".");    
