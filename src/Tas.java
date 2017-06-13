@@ -45,21 +45,22 @@ public class Tas<C extends Comparable<C>>{
 	}
 	
 	public int compare(int i, int j){
-		return this.contenu.get(i).compareTo(this.contenu.get(j));
+		int res = this.contenu.get(i).compareTo(this.contenu.get(j));
+		return res ;
 	}
 
 	/** insertion d'un élément dans le tas
 	 * 	Complexité en O(h) --> h étant la hauteur de l'arbre
 	 * */
-	public void add(C elt){
+	public void ajout(C elt){
 		if (isEmpty()){
 			this.contenu.add(0,elt);
 			this.taille++;
 		}
 		else{
 			this.taille++;
-			this.contenu.add(taille,elt);
-			int i = this.taille;
+			this.contenu.add(elt);
+			int i = this.taille-1;
 			int comp = compare(i,(i/2));
 			while (i>1 && comp>0){
 				echange(this.contenu.get(i),this.contenu.get(i/2));
@@ -99,41 +100,29 @@ public class Tas<C extends Comparable<C>>{
 	//----------------- Méthodes de tri par tas sur place -----------------
 	
 	public void tri(){
-		for (int i = 1;i <this.taille;i++){
-			entasse(this.contenu,i);
+		for (int i = this.taille/2 ;i >=0;i--){
+			System.out.println(this.contenu.get(i));
+			this.entasse(i,this.taille);
 		}
-		for (int j = this.taille; j > 1; j++){
+		for (int j = this.taille-1; j >= 1; j--){
 			echange(this.contenu.get(1),this.contenu.get(j));
-			reEntasse(this.contenu,j);
+			this.entasse(1,j-1);
 		}
 	}
 	
-	public void entasse(ArrayList<C> tab, int i){
-		int j = i;
-		int compj2 = compare(j,(j/2));  
-		while ((j != 1) && (compj2 < 0)){
-			echange(this.contenu.get(j), this.contenu.get(j/2));
-			j = j/2;
-		}
-	}
-	
-	public void reEntasse(ArrayList<C> tab, int i){
-		int j = 1;
-		int filsmax;
-		int comp2j = compare(j,(2*j));
-		int comp2j1 = compare(j,(2*j+1));  
-		while ((2*j+1) <= i && ( comp2j > 0 || comp2j1 > 0 )){
-			int newcomp = compare((2*j),(2*j+1)); 
-			if (newcomp>0){
-				filsmax = 2*j;
+	public void entasse(int i, int t){
+		int k = i;
+		int j = 2*k;
+		while(j < t){
+			int comp = compare(k,j);
+			if (comp < 0){
+				echange(this.contenu.get(k),this.contenu.get(j));
+				k = j;
+				j = 2*k;
 			}
 			else{
-				filsmax = 2*j+1;
+				j = this.taille+1;
 			}
-			j = filsmax;
-		}
-		if ((2*j < i) && (comp2j<0)){
-			echange(this.contenu.get(j),this.contenu.get(2*j));
 		}
 	}
 	
@@ -162,14 +151,32 @@ public class Tas<C extends Comparable<C>>{
 	//-----------------------Main-----------------------
   	
     public static void main(String[] args){
-		ArrayList<String> al = new ArrayList<String>();
+		/*ArrayList<String> al = new ArrayList<String>();
 		Tas<String> t = new Tas<String>(al);
-
-        t.add("<s>");  
-        t.add(".");    
-        t.add(",");    
-        t.add("de");    
-        System.out.println(t);   
+        t.ajout("<s>");
+        t.ajout("de");
+        t.ajout(".");     
+        t.ajout(",");    
+            
+        System.out.println(t);
+        t.tri(); 
+        System.out.println(t); */
+        
+        ArrayList<Integer> al = new ArrayList<Integer>();
+		Tas<Integer> t = new Tas<Integer>(al);
+        t.ajout(1);
+        t.ajout(2);
+        t.ajout(4);     
+        t.ajout(3);
+        t.ajout(3); 
+        t.ajout(8); 
+        t.ajout(3); 
+        t.ajout(2); 
+        t.ajout(10);     
+            
+        System.out.println(t);
+        t.tri(); 
+        System.out.println(t);  
     }
 
 }
