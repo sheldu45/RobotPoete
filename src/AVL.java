@@ -39,7 +39,11 @@ public class AVL<E extends Comparable<E>>{
      }
     
      // ----------------------- INSERTION -----------------------
-     public AVL insertion(E elt){
+	/** Ajout d'un élément 
+	    paramètre : élément E
+	    Complexité : O(log n)
+	    */
+	public AVL insertion(E elt){
          if (this.isEmpty() == true){
              t = new AVL(x);
 		 }
