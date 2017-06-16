@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.regex.Matcher;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 public class Syllabeur {
@@ -12,11 +12,13 @@ public class Syllabeur {
 		str = str.replaceAll("O~", "3");
 		str = str.replaceAll("W~", "4");
 		str = str.replaceAll("yi", "5i");
+		str = str.replaceAll("\\|", "6");
+
 
 		StringBuilder sb = new StringBuilder(str.length()*2);
 		sb.append(str);
 		
-		String classeConsonne = "bpmtdnfvszSZkgrl";
+		String classeConsonne = "bpmtdnfvszSZkgrl6";
 		String classeGlide = "wj5";
 		String voyelles = "@aeiouyAEIOYW1234";
 		
@@ -136,18 +138,147 @@ public class Syllabeur {
 	str = str.replaceAll("3", "O~");
 	str = str.replaceAll("4", "W~");
 	str = str.replaceAll("5", "y");
-		
+	str = str.replaceAll("-", "_");
+	str = str.replaceAll("6", "_");
+	
 	return str;
 	}
 	
 	public static void main(String[] args) {
 		try {
-			String s = SynthetiseurVocal.synthese("Les premiers automates nous font sourire aujourd'hui. Les premiers ordinateurs également, mais un peu moins. ");		
-			System.out.println(s);
+			LinkedList<String> list = new LinkedList<String>();
 			
-			String s2 = Syllabeur.syllabeur(s);
-
-			System.out.println(s2);
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			list.add("des ours");
+			list.add("des chiens");
+			list.add("ces ours");
+			list.add("ces chiens");
+			list.add("un ours");
+			list.add("un chiens");
+			list.add("une ours");
+			list.add("une chiens");
+			list.add("étonnée ours");
+			list.add("étonnée chiens");
+			
+			long startTime = System.nanoTime();
+			int i = 0;
+			
+			for(String s : list){
+				String s2 = SynthetiseurVocal.synthese(s);		
+				System.out.println("s"+i+" : " +s2);
+				i++;
+			}
+			
+			long stopTime = System.nanoTime();
+			double elapsedTime = stopTime - startTime;
+			double elapsedSecondes = elapsedTime/1000000000;
+			double meanSecond = elapsedSecondes/100;
+			System.out.println("100 éléments analysés en "+elapsedSecondes+" secondes");
+			System.out.println("=> moyenne de "+meanSecond+" secondes par éléments");
+			
+			//String s = SynthetiseurVocal.synthese("des ours");		
+			//System.out.println("s : " +s);
+			
+			//String s2 = Syllabeur.syllabeur(s);
+			//System.out.println("s2 : " +s2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

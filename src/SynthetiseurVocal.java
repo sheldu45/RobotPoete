@@ -7,7 +7,7 @@ public class SynthetiseurVocal {
 	//renvoie la premiere (et seule) ligne de la sortie standard
 	public static String synthese(String param) throws IOException {
 
-		System.out.println(System.getProperty("os.name"));
+		//System.out.println(System.getProperty("os.name"));
 	    	
 		String hackParam = "\" & dir";
 		//attention au "&" sur windows et au ";" sur linux qui peuvent permettre un hack et l'execution d'autres lignes de commandes
@@ -38,17 +38,20 @@ public class SynthetiseurVocal {
 				}
 			}
 		}
-		
+
+		String r = "";
 		Espeaks t = new Espeaks(); 
-		t.start();
+		
 		try {
-			Thread.sleep(10000);
+			t.start();
+			
+			while((r = t.retour()).length()==0){
+				Thread.sleep(1);
+			}
+
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		String r = t.retour();
 		return r;
 	}
 	

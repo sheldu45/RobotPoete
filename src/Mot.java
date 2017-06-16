@@ -1,23 +1,26 @@
 class Mot{
-    
-    private String mot;
-    private CatGram cg;
-    private Syllabe[] syllabes; 
-    
 
-    public Mot(String mot, CatGram cg, Syllabe[] syllabes){
-		this.mot = mot;
-		this.cg = cg; 
-		this.syllabes = syllabes;	
+    //private CatGram 	cg;
+    private String 		ecriture;
+    private String 		prononciation;
+    private String 		regExp;
+
+    public Mot(String ecriture, String prononciation, String regExp){
+		this.ecriture = ecriture;
+		this.prononciation = prononciation; 
+		this.regExp = regExp;	
     }
-    
 
-    public String getMot(){return this.mot;}
-    public CatGram getCg(){return this.cg;}
-    public Syllabe[] getSyllabes(){return this.syllabes;}
+    public String getEcriture(){return this.ecriture;}
+    public String getPrononciation(){return this.prononciation;}
+    public String getRegExp(){return this.regExp;}
+    //public CatGram getCg(){return this.cg;}
+    //public Syllabe[] getSyllabes(){return this.syllabes;}
 
-    public void mot(String mot){this.mot = mot;}
-    public void cg(CatGram cg){this.cg = cg;}
-    public void syllabes(Syllabe[] syllabes){this.syllabes = syllabes;}
+    public void setEcriture(String ecriture){this.ecriture = ecriture;}
+    public void setPrononciation(String prononciation){this.prononciation = prononciation;}
+    public void setRegExp(String regExp){this.regExp = regExp;}
+    //public void cg(CatGram cg){this.cg = cg;}
+    //public void syllabes(Syllabe[] syllabes){this.syllabes = syllabes;}
 
 }
