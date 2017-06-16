@@ -7,35 +7,31 @@
 public class AVL<E extends Comparable<E>>{
 	
     private E label;                // étiquette du noeud de l'arbre
-    private BinaryTree<E> left;     // Sous-arbre gauche
-    private BinaryTree<E> right;    // Sous-arbre droit
+    private AVL<E> left;     // Sous-arbre gauche
+    private AVL<E> right;    // Sous-arbre droit
+    private int height;
     
     // Constructeurs
     /** Consruit une feuille d'étiquette label. */
-    public BinaryTree(E label){
-        this(label, null, null);
+    public AVL(E label){
+        this(label, null, null,0);
     }
     
     /** Consruit un arbre d'étiquette label avec 2 sous arbres. */
-    public BinaryTree(E label, BinaryTree<E> left, BinaryTree<E> right){
+    public AVL(E label, AVL<E> left, AVL<E> right, int height ){
         this.label = label;
         this.left = left;
         this.right = right;
+        this.height = height;
     }
     /** Renvoie True si l'arbre est vide, False sinon */
     public boolean isEmpty(){
 		return left == null && right == null;
 	}
 	
-	/** Compare deux éléments avec la fonction compareTo() */
-	public int compare(E i, E j){
-		int res = this.contenu.get(i).compareTo(this.contenu.get(j));
-		return res ;
-	}
-	
 	/* Renvoie la hauteur de l'arbre */
 	 public int hauteur() {
-         return this.isEmpty()== true ? -1 : this.hauteur;
+         return this.isEmpty()== true ? -1 : this.hauteur();
      }
     
      // ----------------------- INSERTION -----------------------
@@ -43,15 +39,16 @@ public class AVL<E extends Comparable<E>>{
 	    paramètre : élément E
 	    Complexité : O(log n)
 	    */
-	public AVL insertion(E elt){
+	public AVL<E> insertion(E elt){
+		 int comp = elt.compareTo(this.label);
+		 AVL<E> t = null;
          if (this.isEmpty() == true){
-             t = new AVL(x);
+             t = new AVL<E>(elt);
 		 }
-		 int comp = compare(elt,this.label);
          else if (comp < 0){
              this.left = this.left.insertion(elt);
-             if(this.left.hauteur - this.right.hauteur() == 2){
-				 int comp2 = compare(elt,this.left.label);
+             if(this.left.hauteur() - this.right.hauteur() == 2){
+				 int comp2 = elt.compareTo(this.left.label);
                  if(comp2 < 0){
 					 t = this.rotGauche();
 				 }
@@ -62,8 +59,8 @@ public class AVL<E extends Comparable<E>>{
          else if(comp > 0){
              this.right = this.right.insertion(elt);
              if(this.right.hauteur() - this.left.hauteur() == 2){
-				 int comp2 = compare(elt,this.right.label);
-                 if( comp2 < 0)(
+				 int comp2 = elt.compareTo(this.right.label);
+                 if( comp2 < 0){
                      t = this.rotDroite();
 				 }
                  else{
@@ -71,26 +68,28 @@ public class AVL<E extends Comparable<E>>{
 				 }
 			}
          }
-         this.hauteur = max(this.left.hauteur(), this.right.hauteur()) + 1;
+         this.height = Math.max(this.left.hauteur(), this.right.hauteur()) + 1;
          return t;
+        }
+		return t;
      }
      
      // ----------------------- ROTATIONS -----------------------
-     public AVL rotGauche(){
-         AVL gauche = this.left;
+     public AVL<E> rotGauche(){
+         AVL<E> gauche = this.left;
          this.left = gauche.right;
          gauche.right = this;
-         this.height = max(this.left.hauteur(), this.right.hauteur()) + 1;
-         gauche.height = max(gauche.left.hauteur(),this.hauteur()) + 1;
-         return k1;
+         this.height = Math.max(this.left.hauteur(), this.right.hauteur()) + 1;
+         gauche.height = Math.max(gauche.left.hauteur(),this.hauteur()) + 1;
+         return gauche;
      }
      
      public AVL rotDroite(){ 
          AVL droit = this.right;
          this.right = droit.left;
          droit.left = this;
-         this.hauteur = max(this.left.hauteur(), this.right.hauteur()) + 1;
-         droit.hauteur = max(droite.rigtht.hauteur(), this.hauteur()) + 1;
+         this.height = Math.max(this.left.hauteur(), this.right.hauteur()) + 1;
+         droit.height = Math.max(droit.right.hauteur(), this.hauteur()) + 1;
          return droit;
      }
      
@@ -108,21 +107,19 @@ public class AVL<E extends Comparable<E>>{
      // ----------------------- RECHERCHE ----------------------- 
      
      public boolean recherche(E elt){ // this == r, val = elt
-         boolean trouve = false;
-         while (!trouve && (this.isEmpty() == false)){
+         while (this.isEmpty() == false){
              E bfr = this.label;
-             int comp = compare(elt,bfr);
+             int comp = elt.compareTo(bfr);
              if (comp < 0){
-                 this = this.left;
+                return this.left.recherche(elt);
 			 }
              else if (comp > 0){
-                 this = this.right;
+                return this.left.recherche(elt);
              } 
-             else if (comp == 0){
-                 found = true;
-                 break;
+             else{
+            	 return true;
              }
-             found = this.recherche(elt);
          }
-         return found;
+         return false;
      }
+}
