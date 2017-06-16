@@ -4,12 +4,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class Categorie extends LinkedList<String>{
+public class ChaineCategorielle extends LinkedList<String>{
 
 		public final static String 	PATH = "./Categories/";
 		public final static int 	MAX_CAPACITY = 1000;
-	
-	    private String 	 nom;
+		private String nom;
 	    
 	    public String getNom(){
 	    	return this.nom;
@@ -18,28 +17,33 @@ public class Categorie extends LinkedList<String>{
 	    public void setNom(String nom){
 	    	this.nom = nom;
 	    }
-	    
-	    public Categorie(){
+	    // --------------- CONSTRUCTEURS ---------------
+	/** Instancie une catégorie "nulle" */    
+	public ChaineCategorielle(){
 	    	super();
 	    	this.nom = "";
 	    }
 	    
-	    //instancie la categorie à partir du nom du fichier contenant les lexemes
-	    public Categorie(String nom) throws IOException{
-	    	super();
-			this. 	nom = nom;
-			File 	fic = new File(PATH+nom);
-			FileReader in = new FileReader(fic);
-		    BufferedReader br = new BufferedReader(in);
-		    String readLine = "";
+	/** Instancie la categorie à partir du nom du fichier contenant les lexemes */
+	public ChaineCategorielle(String nom) throws IOException{
+	    super();
+		this.nom = nom;
+		File fic = new File(PATH+nom);
+		FileReader in = new FileReader(fic);
+		BufferedReader br = new BufferedReader(in);
+		String readLine = "";
             while ((readLine = br.readLine()) != null) {
-		       this.add(readLine);
-		    }
+		this.add(readLine);
+	    }
 		    in.close();
 	    }
 	    
-	    static Categorie combine(Categorie c1, Categorie c2){
-	    	Categorie c3 = new Categorie();
+	//  --------------- METHODES  ---------------
+	
+	/** Combine deux chaines catégorielles entre elles 
+	renvoie une nouvelle chaine catégorielle */
+	    static ChaineCategorielle combine(ChaineCategorielle c1, ChaineCategorielle c2){
+	    	ChaineCategorielle c3 = new Categorie();
 	    	c3.setNom(c1.nom + " " + c2.nom);
 	    	for(String s1 : c1){
 	    		for(String s2 : c2){
@@ -49,6 +53,7 @@ public class Categorie extends LinkedList<String>{
 	    	return c3;
 	    }
 	   
+	/** */
 	    public static Categorie generate(String chaineCategories){
 	    	
 	    }
