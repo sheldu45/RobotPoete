@@ -51,7 +51,7 @@ public class ChaineCategorielle extends LinkedList<String>{
 		    	}
 	    	}
 	    	return c3;
-	    }
+	    } 
 	   
 	/** */
 	    public static Categorie generate(String chaineCategories){
