@@ -1,6 +1,12 @@
+/** Classe AVL, fichier AVL.java
+    Créer un objet AVL 
+    ajoute des éléments comparables à l'intérieur
+    recherche rapidement grâce à la structure ces éléments
+    */
+
 public class AVL<E extends Comparable<E>>{
 	
-	private E label;                // étiquette du noeud de l'arbre
+    private E label;                // étiquette du noeud de l'arbre
     private BinaryTree<E> left;     // Sous-arbre gauche
     private BinaryTree<E> right;    // Sous-arbre droit
     
@@ -16,16 +22,18 @@ public class AVL<E extends Comparable<E>>{
         this.left = left;
         this.right = right;
     }
-    
+    /** Renvoie True si l'arbre est vide, False sinon */
     public boolean isEmpty(){
 		return left == null && right == null;
 	}
 	
+	/** Compare deux éléments avec la fonction compareTo() */
 	public int compare(E i, E j){
 		int res = this.contenu.get(i).compareTo(this.contenu.get(j));
 		return res ;
 	}
 	
+	/* Renvoie la hauteur de l'arbre */
 	 public int hauteur() {
          return this.isEmpty()== true ? -1 : this.hauteur;
      }
